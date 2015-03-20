@@ -406,13 +406,13 @@ var resizePizzas = function(size) {
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -424,7 +424,7 @@ var resizePizzas = function(size) {
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
     var oldwidth = elem.offsetWidth;
-    var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
+    var windowwidth = document.getElementById("randomPizzas").offsetWidth;
     var oldsize = oldwidth / windowwidth;
 
     // TODO: change to 3 sizes? no more xl?
@@ -449,9 +449,10 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
+  var pizzas = document.getElementsByClassName("randomPizzaContainer");
+
   function changePizzaSizes(size) {
     // Moved all of this outside the loop since it only needs to be determined once.
-    var pizzas = document.querySelectorAll(".randomPizzaContainer")
     var dx = determineDx(pizzas[0], size);
     var newwidth = (pizzas[0].offsetWidth + dx) + 'px';
 
@@ -507,7 +508,7 @@ function updatePositions() {
 
   // Defining scrollTopNumber outside of the loop since it's always the same.
   // This speeds up the code quite a bit, but not enough by itself.
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover');
   var scrollTopNumber = document.body.scrollTop / 1250;
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin(scrollTopNumber + (i % 5));
@@ -531,10 +532,10 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  var movingPizzas = document.querySelector("#movingPizzas1");
+  var movingPizzas = document.getElementById("movingPizzas1");
 
-  // Changed to 50 pizzas, which was still 12 more than I could get to show up at 1920x1080
-  for (var i = 0; i < 50; i++) {
+  // Changed to 35 pizzas, which was still more than I could get to show up at 1920x1080
+  for (var i = 0; i < 35; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -543,7 +544,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    console.log(elem);
     movingPizzas.appendChild(elem);
   }
   updatePositions();
